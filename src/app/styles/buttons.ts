@@ -1,0 +1,1 @@
+export const buttonStyle = "border-2 border-darkgreen p-2 m-2";
