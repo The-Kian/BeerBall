@@ -19,7 +19,7 @@ return (
             type="button"
             onClick={() =>
                 { if(inputRef.current) {
-                    addPlayer({id: Math.random().toString(), playerName: inputRef.current.value})
+                    addPlayer({id: Math.floor(Math.random() * 1000).toString(), playerName: inputRef.current.value})
                 } else {
                     console.log("Please enter a player name")
                 }
