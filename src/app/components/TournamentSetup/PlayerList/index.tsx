@@ -1,12 +1,13 @@
 import { PlayerTeamContext } from "@/app/context/PlayerTeamContext";
-import { buttonStyle } from "@/app/styles/buttons";
+import { buttonStyle } from "@/app/styles/styles";
 import { Player } from "@/app/types";
+import allocateTeams from "@/app/utils/TeamSetup/allocateTeams";
 import React, { useContext } from "react";
 
 
 const PlayerList = () => {
 
-  const { players } = useContext(PlayerTeamContext);
+  const { players, addTeam } = useContext(PlayerTeamContext);
   const handleSavePlayers = () => {
     const playersJson = JSON.stringify(
       players.map((player) => ({ name: player }))
@@ -14,7 +15,7 @@ const PlayerList = () => {
     console.log(playersJson);
     };
     const handleAllocateTeams = () => {
-      console.log("Allocate Teams");
+      addTeam(allocateTeams(players));       
     };
 
 
