@@ -1,36 +1,83 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 import { Player, Team } from "../../types";
 
 interface ContextProps {
-    players: Player[];
-    teams: Team[];
-    addPlayer: (player: Player) => void;
-    addTeam: (team: Team, teams: Team[]) => void;
+  players: Player[];
+  teams: Team[];
+  addPlayer: (player: Player) => void;
+  removePlayer: (player: Player) => void;
+  addTeam: (teams: Team[], team?: Team) => void;
+}
+
+interface ProviderProps {
+  children: React.ReactNode;
 }
 
 export const PlayerTeamContext = createContext<ContextProps>({
-    players: [],
-    teams: [],
-    addPlayer: () => {},
-    addTeam: () => {},
+  players: [],
+  teams: [],
+  addPlayer: () => {},
+  removePlayer: () => {},
+  addTeam: () => {},
 });
 
-export const PlayerTeamProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [players, setPlayers] = useState<Player[]>([]);
-    const [teams, setTeams] = useState<Team[]>([]);
+export const PlayerTeamProvider = ({ children }: ProviderProps) => {
+  const addPlayer = (player: Player) => {
+    setPlayers((prevPlayers) => {
+      const updatedPlayers = [...prevPlayers, player];
+      localStorage.setItem("players", JSON.stringify(updatedPlayers));
+      return updatedPlayers;
+    });
+  };
 
-    const addPlayer = (player: Player) => {
-        setPlayers([...players, player]);
-    };
+  const removePlayer = (player: Player) => {
+    setPlayers((prevPlayers) => {
+      const updatedPlayers = prevPlayers.filter(
+        (prevPlayer) => prevPlayer.playerName !== player.playerName
+      );
+      localStorage.setItem("players", JSON.stringify(updatedPlayers));
+      return updatedPlayers;
+    });
+  }
 
-    const addTeam = (team: Team, teams: Team[]) => {
-        setTeams([...teams, team]);
-    };
+  const addTeam = (teams: Team[], team?: Team) => {
+    if (!team) {
+      setTeams([...teams]);
+    } else {
+      setTeams([...teams, team]);
+    }
+    localStorage.setItem("teams", JSON.stringify(teams));
+  };
+  const getPlayers = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("players")
+        ? JSON.parse(localStorage.getItem("players")!)
+        : [];
+    }
+    return [];
+  };
 
-    return (
-        <PlayerTeamContext.Provider value={{ players, teams, addPlayer, addTeam }}>
-            {children}
-        </PlayerTeamContext.Provider>
-    );
+  const getTeams = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("teams")
+        ? JSON.parse(localStorage.getItem("teams")!)
+        : [];
+    }
+    return [];
+  };
+
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [teams, setTeams] = useState<Team[]>([]);
+
+  useEffect(() => {
+    setPlayers(getPlayers());
+    setTeams(getTeams());
+  }, []);
+
+  return (
+    <PlayerTeamContext.Provider value={{ players, teams, addPlayer, addTeam, removePlayer }}>
+      {children}
+    </PlayerTeamContext.Provider>
+  );
 };
