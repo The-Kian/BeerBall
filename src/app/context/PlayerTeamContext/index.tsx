@@ -6,6 +6,7 @@ interface ContextProps {
   players: Player[];
   teams: Team[];
   addPlayer: (player: Player) => void;
+  removePlayer: (player: Player) => void;
   addTeam: (teams: Team[], team?: Team) => void;
 }
 
@@ -17,6 +18,7 @@ export const PlayerTeamContext = createContext<ContextProps>({
   players: [],
   teams: [],
   addPlayer: () => {},
+  removePlayer: () => {},
   addTeam: () => {},
 });
 
@@ -28,6 +30,16 @@ export const PlayerTeamProvider = ({ children }: ProviderProps) => {
       return updatedPlayers;
     });
   };
+
+  const removePlayer = (player: Player) => {
+    setPlayers((prevPlayers) => {
+      const updatedPlayers = prevPlayers.filter(
+        (prevPlayer) => prevPlayer.playerName !== player.playerName
+      );
+      localStorage.setItem("players", JSON.stringify(updatedPlayers));
+      return updatedPlayers;
+    });
+  }
 
   const addTeam = (teams: Team[], team?: Team) => {
     if (!team) {
@@ -64,7 +76,7 @@ export const PlayerTeamProvider = ({ children }: ProviderProps) => {
   }, []);
 
   return (
-    <PlayerTeamContext.Provider value={{ players, teams, addPlayer, addTeam }}>
+    <PlayerTeamContext.Provider value={{ players, teams, addPlayer, addTeam, removePlayer }}>
       {children}
     </PlayerTeamContext.Provider>
   );

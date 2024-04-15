@@ -1,6 +1,7 @@
 
 import React, { useContext, useRef } from "react";
 import {PlayerTeamContext} from "@/app/context/PlayerTeamContext";
+import { v4 as uuid } from "uuid";
 
 const PlayerInput = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -19,7 +20,7 @@ return (
             type="button"
             onClick={() =>
                 { if(inputRef.current) {
-                    addPlayer({id: Math.floor(Math.random() * 1000).toString(), playerName: inputRef.current.value})
+                    addPlayer({id: uuid(), playerName: inputRef.current.value})
                 } else {
                     console.log("Please enter a player name")
                 }
