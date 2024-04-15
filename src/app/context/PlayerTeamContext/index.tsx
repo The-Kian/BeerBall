@@ -39,7 +39,7 @@ export const PlayerTeamProvider = ({ children }: ProviderProps) => {
       localStorage.setItem("players", JSON.stringify(updatedPlayers));
       return updatedPlayers;
     });
-  }
+  };
 
   const addTeam = (teams: Team[], team?: Team) => {
     if (!team) {
@@ -50,33 +50,59 @@ export const PlayerTeamProvider = ({ children }: ProviderProps) => {
     localStorage.setItem("teams", JSON.stringify(teams));
   };
   const getPlayers = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("players")
-        ? JSON.parse(localStorage.getItem("players")!)
-        : [];
-    }
-    return [];
+    fetch("storage/players.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("File not found");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setPlayers(data);
+        localStorage.setItem("players", JSON.stringify(data));
+      })
+      .catch((error) => {
+        console.log(error.message);
+        const localData = localStorage.getItem("players");
+        if (localData) {
+          setPlayers(JSON.parse(localData));
+        }
+      });
   };
 
   const getTeams = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("teams")
-        ? JSON.parse(localStorage.getItem("teams")!)
-        : [];
-    }
-    return [];
+    fetch("storage/teams.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("File not found");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setTeams(data);
+        localStorage.setItem("teams", JSON.stringify(data));
+      })
+      .catch((error) => {
+        console.log(error.message);
+        const localData = localStorage.getItem("teams");
+        if (localData) {
+          setTeams(JSON.parse(localData));
+        }
+      });
   };
 
   const [players, setPlayers] = useState<Player[]>([]);
   const [teams, setTeams] = useState<Team[]>([]);
 
   useEffect(() => {
-    setPlayers(getPlayers());
-    setTeams(getTeams());
+    getPlayers();
+    getTeams();
   }, []);
 
   return (
-    <PlayerTeamContext.Provider value={{ players, teams, addPlayer, addTeam, removePlayer }}>
+    <PlayerTeamContext.Provider
+      value={{ players, teams, addPlayer, addTeam, removePlayer }}
+    >
       {children}
     </PlayerTeamContext.Provider>
   );
