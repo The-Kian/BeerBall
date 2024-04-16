@@ -52,13 +52,6 @@ export const PlayerTeamProvider = ({ children, initialPlayers, initialTeams }: P
     localStorage.setItem("teams", JSON.stringify(teams));
   };
 
-
-useEffect(() => {
-  const playersData = JSON.parse(process.env.PLAYERS_JSON || '[]');
-  setPlayers(playersData);
-  localStorage.setItem("players", JSON.stringify(playersData));
-}, []);
-
   return (
     <PlayerTeamContext.Provider
       value={{ players, teams, addPlayer, addTeam, removePlayer }}

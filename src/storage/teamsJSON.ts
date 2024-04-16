@@ -1,4 +1,4 @@
-[
+const teamsJSON = [
     {
       "id": "575be4a0-de85-4c43-862f-fa65c6dcfcb7",
       "members": [
@@ -56,3 +56,4 @@
       "name": "Team 4"
     }
   ]
+export default teamsJSON;

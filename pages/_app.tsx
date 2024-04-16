@@ -5,6 +5,8 @@ import type { AppProps } from "next/app";
 import { Player, Team } from "@/app/types";
 import { NextPageContext } from "next";
 import Layout from "@/app/layout";
+import playersJSON from "../src/storage/playersJSON";
+import teamsJSON from "../src/storage/teamsJSON";
 
 function MyApp({ Component, pageProps, initialPlayers, initialTeams }: AppProps & { initialPlayers: Player[], initialTeams: Team[] }) {
   useEffect(() => {
@@ -25,11 +27,11 @@ function MyApp({ Component, pageProps, initialPlayers, initialTeams }: AppProps 
 
 MyApp.getInitialProps = async ({ req }: NextPageContext) => {
   if (!req) {
-    return { initialPlayers: [], initialTeams: [] };
+    return { initialPlayers: playersJSON, initialTeams: teamsJSON };
   }
 
-  const players = JSON.parse(process.env.PLAYERS_JSON || '[]');
-  const teams = JSON.parse(process.env.TEAMS_JSON || '[]');
+  const players = JSON.parse(process.env.PLAYERS_JSON || `[]`);
+  const teams = JSON.parse(process.env.TEAMS_JSON || `[]`);
 
   return { initialPlayers: players, initialTeams: teams };
 };
