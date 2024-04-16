@@ -9,11 +9,9 @@ import TeamList from "./TeamList";
 const TournamentSetup = () => {
   return (
     <div>
-      <PlayerTeamProvider>
         <PlayerList />
         <PlayerInput />
         <TeamList />
-      </PlayerTeamProvider>
     </div>
   );
 };
