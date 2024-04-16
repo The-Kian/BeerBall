@@ -22,7 +22,9 @@ export const PlayerTeamContext = createContext<ContextProps>({
   addTeam: () => {},
 });
 
-export const PlayerTeamProvider = ({ children }: ProviderProps) => {
+export const PlayerTeamProvider = ({ children, initialPlayers, initialTeams }: ProviderProps & { initialPlayers: Player[], initialTeams: Team[] }) => {
+  const [players, setPlayers] = useState(initialPlayers);
+  const [teams, setTeams] = useState(initialTeams);
   const addPlayer = (player: Player) => {
     setPlayers((prevPlayers) => {
       const updatedPlayers = [...prevPlayers, player];
@@ -49,55 +51,13 @@ export const PlayerTeamProvider = ({ children }: ProviderProps) => {
     }
     localStorage.setItem("teams", JSON.stringify(teams));
   };
-  const getPlayers = () => {
-    fetch("storage/players.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("File not found");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setPlayers(data);
-        localStorage.setItem("players", JSON.stringify(data));
-      })
-      .catch((error) => {
-        console.log(error.message);
-        const localData = localStorage.getItem("players");
-        if (localData) {
-          setPlayers(JSON.parse(localData));
-        }
-      });
-  };
 
-  const getTeams = () => {
-    fetch("storage/teams.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("File not found");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setTeams(data);
-        localStorage.setItem("teams", JSON.stringify(data));
-      })
-      .catch((error) => {
-        console.log(error.message);
-        const localData = localStorage.getItem("teams");
-        if (localData) {
-          setTeams(JSON.parse(localData));
-        }
-      });
-  };
 
-  const [players, setPlayers] = useState<Player[]>([]);
-  const [teams, setTeams] = useState<Team[]>([]);
-
-  useEffect(() => {
-    getPlayers();
-    getTeams();
-  }, []);
+useEffect(() => {
+  const playersData = JSON.parse(process.env.PLAYERS_JSON || '[]');
+  setPlayers(playersData);
+  localStorage.setItem("players", JSON.stringify(playersData));
+}, []);
 
   return (
     <PlayerTeamContext.Provider

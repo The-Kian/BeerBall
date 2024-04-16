@@ -13,6 +13,10 @@ const PlayerList = () => {
     console.log(playersJson);
   };
   const handleAllocateTeams = () => {
+    if (players.length % 2 !== 0) {
+      alert("Please add an even number of players");
+      return;
+    }
     addTeam(allocateTeams(players));
   };
   const handleRemovePlayer = (playerToRemove: Player) => {
