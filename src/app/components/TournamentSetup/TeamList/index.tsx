@@ -1,5 +1,6 @@
 import { PlayerTeamContext } from "@/app/context/PlayerTeamContext";
 import { teamMemberStyle } from "@/app/styles/styles";
+import { Team } from "@/app/types";
 import { useContext } from "react";
 
 const TeamList = () => {
@@ -13,7 +14,7 @@ const TeamList = () => {
           <li key={index}>
             <ul className="text-2xl">{team.name}</ul>
             <ul>
-              {team.members.map((member, index) => (
+              {team.members && teams.length>0 && team.members.map((member, index) => (
                 <li key={index} className={teamMemberStyle}>
                   {member.playerName}
                 </li>
@@ -27,3 +28,7 @@ const TeamList = () => {
 };
 
 export default TeamList;
+function useState<T>(arg0: never[]): [any, any] {
+  throw new Error("Function not implemented.");
+}
+

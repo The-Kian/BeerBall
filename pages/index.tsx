@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import TournamentSetup from "../src/app/components/TournamentSetup";
 import { buttonStyle } from "../src/app/styles/styles";
+import { PlayerTeamContext } from "@/app/context/PlayerTeamContext";
 
 export default function Home() {
+  const { players, teams } = useContext(PlayerTeamContext);
+  
   return (
     <main className="w-1/2 flex flex-col items-center justify-center p-24">
       <div>

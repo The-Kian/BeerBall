@@ -22,7 +22,9 @@ export const PlayerTeamContext = createContext<ContextProps>({
   addTeam: () => {},
 });
 
-export const PlayerTeamProvider = ({ children }: ProviderProps) => {
+export const PlayerTeamProvider = ({ children, initialPlayers, initialTeams }: ProviderProps & { initialPlayers: Player[], initialTeams: Team[] }) => {
+  const [players, setPlayers] = useState(initialPlayers);
+  const [teams, setTeams] = useState(initialTeams);
   const addPlayer = (player: Player) => {
     setPlayers((prevPlayers) => {
       const updatedPlayers = [...prevPlayers, player];
@@ -90,10 +92,6 @@ export const PlayerTeamProvider = ({ children }: ProviderProps) => {
         }
       });
   };
-
-  const [players, setPlayers] = useState<Player[]>([]);
-  const [teams, setTeams] = useState<Team[]>([]);
-
   useEffect(() => {
     getPlayers();
     getTeams();
