@@ -51,51 +51,13 @@ export const PlayerTeamProvider = ({ children, initialPlayers, initialTeams }: P
     }
     localStorage.setItem("teams", JSON.stringify(teams));
   };
-  const getPlayers = () => {
-    fetch("storage/players.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("File not found");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setPlayers(data);
-        localStorage.setItem("players", JSON.stringify(data));
-      })
-      .catch((error) => {
-        console.log(error.message);
-        const localData = localStorage.getItem("players");
-        if (localData) {
-          setPlayers(JSON.parse(localData));
-        }
-      });
-  };
 
-  const getTeams = () => {
-    fetch("storage/teams.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("File not found");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setTeams(data);
-        localStorage.setItem("teams", JSON.stringify(data));
-      })
-      .catch((error) => {
-        console.log(error.message);
-        const localData = localStorage.getItem("teams");
-        if (localData) {
-          setTeams(JSON.parse(localData));
-        }
-      });
-  };
-  useEffect(() => {
-    getPlayers();
-    getTeams();
-  }, []);
+
+useEffect(() => {
+  const playersData = JSON.parse(process.env.PLAYERS_JSON || '[]');
+  setPlayers(playersData);
+  localStorage.setItem("players", JSON.stringify(playersData));
+}, []);
 
   return (
     <PlayerTeamContext.Provider
