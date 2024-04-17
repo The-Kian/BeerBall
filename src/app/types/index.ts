@@ -8,3 +8,9 @@ export type Team = {
     name: string;
     members: Player[];
 };
+
+export interface RBSeedTeam {
+    
+        name?: string;
+        [key: string]: any;
+}

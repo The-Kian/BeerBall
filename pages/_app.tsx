@@ -7,6 +7,7 @@ import { NextPageContext } from "next";
 import Layout from "@/app/layout";
 import playersJSON from "../src/storage/playersJSON";
 import teamsJSON from "../src/storage/teamsJSON";
+import { TournamentProvider } from "@/app/context/TournamentContext";
 
 function MyApp({ Component, pageProps, initialPlayers, initialTeams }: AppProps & { initialPlayers: Player[], initialTeams: Team[] }) {
   useEffect(() => {
@@ -19,7 +20,9 @@ function MyApp({ Component, pageProps, initialPlayers, initialTeams }: AppProps 
   return (
     <Layout>
     <PlayerTeamProvider initialPlayers={initialPlayers} initialTeams={initialTeams}>
+      <TournamentProvider >
       <Component {...pageProps} />
+    </TournamentProvider>
     </PlayerTeamProvider>
     </Layout>
   );

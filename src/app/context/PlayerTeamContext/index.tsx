@@ -8,6 +8,7 @@ interface ContextProps {
   addPlayer: (player: Player) => void;
   removePlayer: (player: Player) => void;
   addTeam: (teams: Team[], team?: Team) => void;
+  setTeams: (teams: Team[]) => void;
 }
 
 interface ProviderProps {
@@ -20,6 +21,7 @@ export const PlayerTeamContext = createContext<ContextProps>({
   addPlayer: () => {},
   removePlayer: () => {},
   addTeam: () => {},
+  setTeams: () => {},
 });
 
 export const PlayerTeamProvider = ({ children, initialPlayers, initialTeams }: ProviderProps & { initialPlayers: Player[], initialTeams: Team[] }) => {
@@ -54,7 +56,7 @@ export const PlayerTeamProvider = ({ children, initialPlayers, initialTeams }: P
 
   return (
     <PlayerTeamContext.Provider
-      value={{ players, teams, addPlayer, addTeam, removePlayer }}
+      value={{ players, teams, addPlayer, addTeam, removePlayer, setTeams }}
     >
       {children}
     </PlayerTeamContext.Provider>
