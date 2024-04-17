@@ -1,11 +1,13 @@
+import { TournamentContext } from "@/app/context/TournamentContext";
 import { Team } from "@/app/types";
+import { useContext } from "react";
 import { IRoundProps, ISeedProps } from "react-brackets";
 
 interface ITournamentData {
     rounds: IRoundProps[];
 }
 
-const createInitialMatches = (teams: Team[]): ITournamentData => {
+export const createInitialMatches = (teams: Team[]): ITournamentData => {
     const numTeams = teams.length;
     let matchId = 0;
     const upperBracketRounds: IRoundProps[] = [];
@@ -50,4 +52,18 @@ const createInitialMatches = (teams: Team[]): ITournamentData => {
     };
 };
 
-export default createInitialMatches;
+const handleTeamWin = (winningTeam: Team, roundId: number, matchId: number) => {
+    const { rounds, setRounds } = useContext(TournamentContext);
+    // Copy the current state of the rounds
+    const updatedRounds = [...rounds];
+  
+    // Find the next match for the winning team
+    const nextMatchId = Math.floor(matchId / 2);
+    const nextTeamSlot = matchId % 2 === 0 ? 0 : 1;
+  
+    // Update the next match with the winning team
+    updatedRounds[roundId + 1].seeds[nextMatchId].teams[nextTeamSlot] = winningTeam;
+  
+    // Update the state of the rounds
+    setRounds(updatedRounds);
+  };
