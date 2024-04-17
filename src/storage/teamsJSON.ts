@@ -1,59 +1,32 @@
 const teamsJSON = [
-    {
-      "id": "575be4a0-de85-4c43-862f-fa65c6dcfcb7",
+  {
+      "id": "0d1b72b7-4b8e-4ee7-b811-1e801c4d9a47",
+      "name": "Alggy",
       "members": [
-        {
-          "id": "c9703c56-9ec5-48ec-bb99-990257d16408",
-          "playerName": "Lucy"
-        },
-        {
-          "id": "9677c05b-5745-41c1-8b11-42fa8af1f6e3",
-          "playerName": "Tom"
-        }
-      ],
-      "name": "Team 1"
-    },
-    {
-      "id": "e49526f5-dccc-4f25-8ad4-9b7e59a851c5",
+          {
+              "id": "7e150fd7-db5d-4a86-8f13-dd5e8469dc6a",
+              "playerName": "Alex"
+          },
+          {
+              "id": "283c04e1-2a8a-410a-9a55-4d0dcae2d541",
+              "playerName": "Ziggy"
+          }
+      ]
+  },
+  {
+      "id": "f5776308-a446-4ead-a454-613a3262a9dd",
+      "name": "Joper",
       "members": [
-        {
-          "id": "ab91b12c-bbcb-47cb-8ca7-ef898c967f3d",
-          "playerName": "alex"
-        },
-        {
-          "id": "57d2f1a8-285e-408c-a9d9-723ce6190d3e",
-          "playerName": "Neel"
-        }
-      ],
-      "name": "Team 2"
-    },
-    {
-      "id": "ea3ee040-2907-4aa9-8d53-12bc83abcdf7",
-      "members": [
-        {
-          "id": "7310cc30-2a31-4d36-9124-02a91a17c49a",
-          "playerName": "josh"
-        },
-        {
-          "id": "e7e32d4c-1e4b-4fee-ba8a-71a0fe1d0a0f",
-          "playerName": "cooper"
-        }
-      ],
-      "name": "Team 3"
-    },
-    {
-      "id": "c1aef14c-a73e-491b-9fa5-b8f1010ab054",
-      "members": [
-        {
-          "id": "e17c31ec-569e-42f8-8c87-acb2c1ec7cc8",
-          "playerName": "Ziggy"
-        },
-        {
-          "id": "838",
-          "playerName": "Kian"
-        }
-      ],
-      "name": "Team 4"
-    }
-  ]
+          {
+              "id": "1dc6078c-6488-40db-b74e-2f91eb2202b0",
+              "playerName": "Josh"
+          },
+          {
+              "id": "1bf8af28-4ef8-4c0f-b969-66756b052da9",
+              "playerName": "Cooper"
+          }
+      ]
+  }
+]
+
 export default teamsJSON;

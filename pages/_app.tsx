@@ -30,7 +30,7 @@ MyApp.getInitialProps = async ({ req }: NextPageContext) => {
     return { initialPlayers: playersJSON, initialTeams: teamsJSON };
   }
 
-  const players = JSON.parse(process.env.PLAYERS_JSON || `[]`);
+  const players = JSON.parse(process.env.PLAYERS_JSON || ``);
   const teams = JSON.parse(process.env.TEAMS_JSON || `[]`);
 
   return { initialPlayers: players, initialTeams: teams };
