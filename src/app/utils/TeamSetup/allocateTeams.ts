@@ -13,19 +13,7 @@ export default function allocateTeams(players: Player[]): Team[] {
     return array;
   }
 
-    // Separate Josh and Molly from the rest of the players
-    const joshAndMolly = players.filter(player => player.playerName === "Josh" || player.playerName === "Molly");
-    const otherPlayers = players.filter(player => player.playerName !== "Josh" && player.playerName !== "Molly");
-  
-    // Add Josh and Molly to the teams array
-    if (joshAndMolly.length === 2) {
-      const teamName = "JoshMolly";
-      const team: Team = { id: uuidv4(), name: teamName, members: joshAndMolly };
-      teams.push(team);
-    }
-  
-
-  const shuffledPlayers = shuffleArray(otherPlayers)
+  const shuffledPlayers = shuffleArray(players)
   for (let i = 0; i < shuffledPlayers.length; i += 2) {
     const firstHalf = shuffledPlayers[i].playerName.slice(0, shuffledPlayers[i].playerName.length / 2);
     const secondHalf = shuffledPlayers[i + 1].playerName.slice(shuffledPlayers[i + 1].playerName.length / 2);
