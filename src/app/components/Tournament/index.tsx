@@ -1,7 +1,7 @@
 "use client";
 
 import { PlayerTeamContext } from "@/app/context/PlayerTeamContext";
-import { createInitialMatches } from "@/app/utils/TournamentBracketSetup";
+import createInitialMatches from "@/app/utils/TournamentBracketSetup";
 import { useContext, useEffect, useState } from "react";
 import { Bracket, IRoundProps } from "react-brackets";
 
