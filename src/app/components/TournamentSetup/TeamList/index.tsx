@@ -2,11 +2,14 @@ import { PlayerTeamContext } from "@/app/context/PlayerTeamContext";
 import { buttonStyle, teamMemberStyle } from "@/app/styles/styles";
 import { Team } from "@/app/types";
 import shuffleTeams from "@/app/utils/shuffleTeams";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const TeamList = () => {
   const { teams, setTeams } = useContext(PlayerTeamContext);
 
+  useEffect(() => {
+    localStorage.setItem('teams', JSON.stringify(teams));
+  }, [teams]);
 
 
   return (
