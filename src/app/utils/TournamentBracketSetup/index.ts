@@ -2,7 +2,8 @@ import { Team } from "@/app/types";
 import { IRoundProps, ISeedProps } from "react-brackets";
 
 interface ITournamentData {
-    rounds: IRoundProps[];
+    upperRounds: IRoundProps[];
+    lowerRounds: IRoundProps[];
 }
 
 const createInitialMatches = (teams: Team[]): ITournamentData => {
@@ -30,19 +31,37 @@ const createInitialMatches = (teams: Team[]): ITournamentData => {
             teams: [],
         });
     }
+    const numberOfLowerRounds = numberOfRounds - 1;
 
-    const lowerRoundMatches = [];
-    for (let i = 0; i < numTeams / 2; i++) {
-        lowerRoundMatches.push({
-            id: i + numTeams / 2, 
-            teams: [{}, {}], 
+    // Initialize Lower Bracket Rounds
+    for (let round = 0; round < numberOfLowerRounds; round++) {
+        let numberOfMatches;
+        if (round === 1) { // Specifically adjusting for round 2 of the lower bracket
+            // Assuming 2 losers from the upper bracket round 2 go to lower bracket round 2
+            // This might need adjustment based on the total number of teams and the tournament structure
+            numberOfMatches = (numTeams / Math.pow(2, round + 2)) + 1; // Add extra match for the 2 losers
+        } else {
+            numberOfMatches = numTeams / Math.pow(2, round + 2); // Fewer matches per round in the lower bracket
+        }
+        const lowerRoundMatches = [];
+    
+        for (let i = 0; i < numberOfMatches; i++) {
+            lowerRoundMatches.push({
+                id: matchId++,
+                teams: [{}, {}],
+            });
+        }
+        lowerBracketRounds.push({
+            title: `Lower Bracket Round ${round + 1}`,
+            seeds: lowerRoundMatches,
+            id: round,
+            teams: [],
         });
     }
-
-
+    
     return {
-        rounds: upperBracketRounds
-        ,
+        upperRounds: upperBracketRounds,
+        lowerRounds: lowerBracketRounds,
     };
 };
 

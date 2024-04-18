@@ -7,13 +7,17 @@ import { PlayerTeamContext } from '../PlayerTeamContext';
 
 
 interface TournamentContextType {
-  rounds: IRoundProps[];
-  setRounds: (value: IRoundProps[]) => void;
+  upperRounds: IRoundProps[];
+  lowerRounds: IRoundProps[]; 
+  setUpperRounds: (value: IRoundProps[]) => void;
+  setLowerRounds: (value: IRoundProps[]) => void;
 }
 
 const defaultState: TournamentContextType = {
-  rounds: [],
-  setRounds: () => {},
+  upperRounds: [],
+  lowerRounds: [],
+  setUpperRounds: () => {},
+  setLowerRounds: () => {},
 };
 
 export const TournamentContext = createContext<TournamentContextType>(defaultState);
@@ -23,21 +27,22 @@ interface TournamentProviderProps {
 }
 
 export const TournamentProvider = ({ children }: TournamentProviderProps) => {
-  const [rounds, setRounds] = useState<IRoundProps[]>([]);
+  const [lowerRounds, setLowerRounds] = useState<IRoundProps[]>([]);
+  const [upperRounds, setUpperRounds] = useState<IRoundProps[]>([]);
 
   const { teams } = useContext(PlayerTeamContext);
-  console.log("🚀 ~ TournamentProvider ~ teams:", teams)
 
   
 
     useEffect(() => {
         if (teams) {
         const newRounds = createInitialMatches(teams);
-        setRounds(newRounds.rounds);
+        setUpperRounds(newRounds.upperRounds);
+        setLowerRounds(newRounds.lowerRounds);
         }
     }, [teams]);
   return (
-    <TournamentContext.Provider value={{ rounds, setRounds }}>
+    <TournamentContext.Provider value={{ upperRounds, setUpperRounds, lowerRounds, setLowerRounds }}>
       {children}
     </TournamentContext.Provider>
   );
