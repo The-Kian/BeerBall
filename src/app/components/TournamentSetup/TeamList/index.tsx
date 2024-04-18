@@ -1,10 +1,13 @@
 import { PlayerTeamContext } from "@/app/context/PlayerTeamContext";
-import { teamMemberStyle } from "@/app/styles/styles";
+import { buttonStyle, teamMemberStyle } from "@/app/styles/styles";
 import { Team } from "@/app/types";
+import shuffleTeams from "@/app/utils/shuffleTeams";
 import { useContext } from "react";
 
 const TeamList = () => {
-  const { teams } = useContext(PlayerTeamContext);
+  const { teams, setTeams } = useContext(PlayerTeamContext);
+
+
 
   return (
     <div>
@@ -14,8 +17,8 @@ const TeamList = () => {
           <li key={index}>
             <ul className="text-2xl">{team.name}</ul>
             <ul>
-              {team.members && teams.length>0 && team.members.map((member, index) => (
-                <li key={index} className={teamMemberStyle}>
+              {team.members.map((member, memberIndex) => (
+                <li key={`${index}-${memberIndex}`} className={teamMemberStyle}>
                   {member.playerName}
                 </li>
               ))}
@@ -23,7 +26,15 @@ const TeamList = () => {
           </li>
         ))}
       </ul>
-    </div>
+      <button className={buttonStyle} onClick={() => {
+        console.log("Before shuffle:", teams);
+        const shuffledTeams = shuffleTeams(teams);
+        console.log("After shuffle:", shuffledTeams);
+        setTeams(shuffledTeams);
+}}>
+      Shuffle Teams
+    </button>
+    </div >
   );
 };
 
