@@ -5,29 +5,42 @@ import { IRoundProps, ISeedProps } from "react-brackets";
 
 export const handleTeamWin = (winningTeam: RBSeedTeam, roundId: number, matchId: number,
   isLowerBracket: boolean,
-  rounds: IRoundProps[], setRounds: (value: IRoundProps[]) => void) => {
+  rounds: IRoundProps[], setRounds: (value: IRoundProps[]) => void,
+  finalRounds: IRoundProps[], setFinalRounds: (value: IRoundProps[]) => void) => {
   const updatedRounds = [...rounds];
 
   let nextMatchId;
   let teamIndex;
 
+  const isLastRoundInWinnersBracket = !isLowerBracket && roundId === rounds.length - 1;
+  const isLastRoundInLosersBracket = isLowerBracket && roundId === rounds.length - 1;
+
+  const updatedFinalRounds = finalRounds ? [...finalRounds] : [];
+
+  if (isLastRoundInWinnersBracket) {
+    updatedFinalRounds[0].seeds[0].teams[0] = winningTeam;
+    setFinalRounds(updatedFinalRounds);
+  } else if (isLastRoundInLosersBracket) {
+    updatedFinalRounds[0].seeds[0].teams[1] = winningTeam;
+    setFinalRounds(updatedFinalRounds);
+    
+  }
+
   if (isLowerBracket && roundId === 0) {
-    // Adjust the calculation for the lower bracket's first round
     if (matchId % 2 === 0) {
-      // For even matchId, increment nextMatchId by 1
+      // flip bracket
       nextMatchId = Math.floor(matchId / 2) + 1;
     } else {
-      // For odd matchId, use the same calculation as before
       nextMatchId = Math.floor(matchId / 2);
     }
     teamIndex = matchId % 2;
   } else {
     nextMatchId = Math.floor(matchId / 2);
-    const nextTeamSlot = matchId % 2 === 0 ? 'team1' : 'team2'; 
+    const nextTeamSlot = matchId % 2 === 0 ? 'team1' : 'team2';
     teamIndex = nextTeamSlot === 'team1' ? 0 : 1;
   }
-  
-  
+
+
 
   if (!updatedRounds[roundId + 1]) {
     console.error('Next round does not exist');

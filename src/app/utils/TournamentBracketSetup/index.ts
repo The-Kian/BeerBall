@@ -4,6 +4,7 @@ import { IRoundProps, ISeedProps } from "react-brackets";
 interface ITournamentData {
     upperRounds: IRoundProps[];
     lowerRounds: IRoundProps[];
+    finalRounds: IRoundProps[];
 }
 
 const createInitialMatches = (teams: Team[]): ITournamentData => {
@@ -61,6 +62,14 @@ const createInitialMatches = (teams: Team[]): ITournamentData => {
     return {
         upperRounds: upperBracketRounds,
         lowerRounds: lowerBracketRounds,
+        finalRounds: [
+            {
+                title: 'Finals',
+                seeds: [{ id: 0, teams: [{}, {}] }],
+                id: 0,
+                teams: [],
+            },
+        ],
     };
 };
 
