@@ -9,12 +9,8 @@ import LowerBracket from "./LowerBracket";
 const Tournament = () => {
   const { teams } = useContext(PlayerTeamContext)
   const { upperRounds, setUpperRounds, lowerRounds, setLowerRounds } = useContext(TournamentContext)
-  console.log("🚀 ~ Tournament ~ lowerRounds:", lowerRounds)
-  console.log("🚀 ~ Tournament ~ upperRounds:", upperRounds)
-
-  useEffect(() => {
-    console.log('Updated lowerRounds:', lowerRounds);
-  }, [lowerRounds]);
+  // console.log("🚀 ~ Tournament ~ lowerRounds:", lowerRounds)
+  // console.log("🚀 ~ Tournament ~ upperRounds:", upperRounds)
   
   return (
     <div>
