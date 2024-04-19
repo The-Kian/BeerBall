@@ -10,7 +10,7 @@ export const handleTeamLoss = (
 ) => {
     const updatedLowerRounds = [...lowerRounds];
 
-    const lowerRoundId = upperRoundId;
+    const lowerRoundId = calculateLowerRoundId(upperRoundId);
     const lowerMatchId = calculateLowerMatchId({upperRoundId, upperMatchId});
 
     const lowerRound = updatedLowerRounds[lowerRoundId];
@@ -22,20 +22,26 @@ export const handleTeamLoss = (
         console.log("🚀 handleTeamLoss ~ slotIndex:", slotIndex)
         
         lowerRound.seeds[targetSeedIndex].teams[slotIndex] = losingTeam;
-        console.log('🚀 handleTeamLoss ~ Seed found  for matchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
+        console.log('🚀 handleTeamLoss ~ Seed found  for lowerMatchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
         
     } else {
         // Handle the case where the seed does not exist, if necessary
-        console.log('🚀 handleTeamLoss ~  Seed not found for matchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
+        console.log('🚀 handleTeamLoss ~  Seed not found for lowerMatchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
     }
 
     setLowerRounds(updatedLowerRounds);
 };
 
-  
+const calculateLowerRoundId = (upperRoundId: number) => {
+    if (upperRoundId === 2) {
+        return 3;
+    }
+    return upperRoundId;
+}
+
 const calculateLowerMatchId = ({upperRoundId, upperMatchId, totalLowerMatches}:any) => {
 
-    let baseID
+    let baseID = upperMatchId;
     switch (upperRoundId) {
         case 0:
             console.log("🚀 ~ calculateLowerMatchId ~ case 0:")
@@ -45,11 +51,12 @@ const calculateLowerMatchId = ({upperRoundId, upperMatchId, totalLowerMatches}:a
             console.log("🚀 ~ calculateLowerMatchId ~ case 1:")
             baseID = 9
             break;
-        default:
+        case 2:
             console.log(`🚀 ~ calculateLowerMatchId ~ case: ${upperRoundId}`)
-            baseID = 11
+            baseID = 12
             break;
     }
+    
 
     return baseID + (upperMatchId % 2);
 };

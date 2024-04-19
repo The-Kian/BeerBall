@@ -11,15 +11,22 @@ export const handleTeamWin = (winningTeam: RBSeedTeam, roundId: number, matchId:
   let nextMatchId;
   let teamIndex;
 
-  // Find the next match for the winning team
   if (isLowerBracket && roundId === 0) {
-    nextMatchId = Math.ceil(matchId / 2);
-    teamIndex = matchId % 2
+    // Adjust the calculation for the lower bracket's first round
+    if (matchId % 2 === 0) {
+      // For even matchId, increment nextMatchId by 1
+      nextMatchId = Math.floor(matchId / 2) + 1;
+    } else {
+      // For odd matchId, use the same calculation as before
+      nextMatchId = Math.floor(matchId / 2);
+    }
+    teamIndex = matchId % 2;
   } else {
     nextMatchId = Math.floor(matchId / 2);
     const nextTeamSlot = matchId % 2 === 0 ? 'team1' : 'team2'; 
     teamIndex = nextTeamSlot === 'team1' ? 0 : 1;
   }
+  
   
 
   if (!updatedRounds[roundId + 1]) {

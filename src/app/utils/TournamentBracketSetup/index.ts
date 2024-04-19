@@ -33,7 +33,7 @@ const createInitialMatches = (teams: Team[]): ITournamentData => {
     }
     const numberOfLowerRounds = numberOfRounds;
 
-    for (let round = 0; round < numberOfLowerRounds; round++) {
+    for (let round = 0; round <= numberOfLowerRounds; round++) {
         let numberOfMatches;
         if (round === 1) { 
             numberOfMatches = (numTeams / Math.pow(2, round + 2)) + 1; 
