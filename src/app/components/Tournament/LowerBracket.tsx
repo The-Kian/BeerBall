@@ -7,6 +7,7 @@ interface LowerBracketProps {
 
 const LowerBracket = ({ rounds, setRounds }: LowerBracketProps) => {
     const CustomSeed = ({ seed, breakpoint, roundIndex, seedIndex }: IRenderSeedProps) => {
+        const isLowerBracket = true;
         return (
             <Seed mobileBreakpoint={breakpoint} className="text-sm">
                 <SeedItem>
@@ -15,7 +16,7 @@ const LowerBracket = ({ rounds, setRounds }: LowerBracketProps) => {
                             {seed.id}
                             <SeedTeam className="flex-grow">{seed.teams[0]?.name || 'NO TEAM'}</SeedTeam>
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                onClick={() => handleTeamWin(seed.teams[0], roundIndex, seedIndex, rounds, setRounds)}>
+                                onClick={() => handleTeamWin(seed.teams[0], roundIndex, seedIndex, isLowerBracket, rounds, setRounds)}>
                                 Win
                             </button>
                         </div>
@@ -24,7 +25,7 @@ const LowerBracket = ({ rounds, setRounds }: LowerBracketProps) => {
 
                             <SeedTeam className="flex-grow">{seed.teams[1]?.name || 'NO TEAM'}</SeedTeam>
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                onClick={() => handleTeamWin(seed.teams[1], roundIndex, seedIndex, rounds, setRounds)}>
+                                onClick={() => handleTeamWin(seed.teams[1], roundIndex, seedIndex, isLowerBracket,rounds, setRounds)}>
                                 Win
                             </button>
                         </div>

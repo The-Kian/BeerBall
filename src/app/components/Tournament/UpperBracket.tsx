@@ -10,6 +10,7 @@ interface UpperBracketProps {
 
 const UpperBracket = ({ upperRounds, setUpperRounds, lowerRounds, setLowerRounds }: UpperBracketProps) => {
     const CustomSeed = ({ seed, breakpoint, roundIndex, seedIndex }: IRenderSeedProps) => {
+        const isLowerBracket = false;
         return (
             <Seed mobileBreakpoint={breakpoint} className="text-sm">
                 <SeedItem>
@@ -19,7 +20,7 @@ const UpperBracket = ({ upperRounds, setUpperRounds, lowerRounds, setLowerRounds
                             <SeedTeam className="flex-grow">{seed.teams[0]?.name || 'NO TEAM'}</SeedTeam>
 
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                onClick={() => handleTeamWin(seed.teams[0], roundIndex, seedIndex, upperRounds, setUpperRounds)}>
+                                onClick={() => handleTeamWin(seed.teams[0], roundIndex, seedIndex, isLowerBracket, upperRounds, setUpperRounds)}>
                                 Win
                             </button>
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
@@ -32,7 +33,7 @@ const UpperBracket = ({ upperRounds, setUpperRounds, lowerRounds, setLowerRounds
 
                             <SeedTeam className="flex-grow">{seed.teams[1]?.name || 'NO TEAM'}</SeedTeam>
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                onClick={() => handleTeamWin(seed.teams[1], roundIndex, seedIndex, upperRounds, setUpperRounds)}>
+                                onClick={() => handleTeamWin(seed.teams[1], roundIndex, seedIndex, isLowerBracket, upperRounds, setUpperRounds)}>
                                 Win
                             </button>
                         </div>

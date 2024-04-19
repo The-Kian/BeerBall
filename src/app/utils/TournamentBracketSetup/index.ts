@@ -31,18 +31,17 @@ const createInitialMatches = (teams: Team[]): ITournamentData => {
             teams: [],
         });
     }
-    const numberOfLowerRounds = numberOfRounds - 1;
+    const numberOfLowerRounds = numberOfRounds;
 
-    // Initialize Lower Bracket Rounds
     for (let round = 0; round < numberOfLowerRounds; round++) {
         let numberOfMatches;
-        if (round === 1) { // Specifically adjusting for round 2 of the lower bracket
-            // Assuming 2 losers from the upper bracket round 2 go to lower bracket round 2
-            // This might need adjustment based on the total number of teams and the tournament structure
-            numberOfMatches = (numTeams / Math.pow(2, round + 2)) + 1; // Add extra match for the 2 losers
+        if (round === 1) { 
+            numberOfMatches = (numTeams / Math.pow(2, round + 2)) + 1; 
         } else {
-            numberOfMatches = numTeams / Math.pow(2, round + 2); // Fewer matches per round in the lower bracket
+            numberOfMatches = numTeams / Math.pow(2, round + 2); 
         }
+        console.log("🚀 ~ createInitialLowerMatches ~ numberOfMatches:", numberOfMatches, "round: ", round)
+
         const lowerRoundMatches = [];
     
         for (let i = 0; i < numberOfMatches; i++) {

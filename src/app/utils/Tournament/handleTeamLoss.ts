@@ -19,14 +19,14 @@ export const handleTeamLoss = (
     if (targetSeedIndex !== -1) {
         // Seed exists, update the team in the next available slot
         const slotIndex = lowerRound.seeds[targetSeedIndex].teams[0].name ? 1 : 0;
-        console.log("🚀 ~ slotIndex:", slotIndex)
+        console.log("🚀 handleTeamLoss ~ slotIndex:", slotIndex)
         
         lowerRound.seeds[targetSeedIndex].teams[slotIndex] = losingTeam;
-        console.log('🚀 ~ Seed found  for matchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
+        console.log('🚀 handleTeamLoss ~ Seed found  for matchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
         
     } else {
         // Handle the case where the seed does not exist, if necessary
-        console.log('🚀 ~ Seed not found for matchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
+        console.log('🚀 handleTeamLoss ~  Seed not found for matchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
     }
 
     setLowerRounds(updatedLowerRounds);
