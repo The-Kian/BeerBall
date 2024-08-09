@@ -14,22 +14,8 @@ const teamsJSON = [
         ]
     },
     {
-        "id": "f5776308-a446-4ead-a454-613a3262a9dd",
-        "name": "Aura",
-        "members": [
-            {
-                "id": "1dc6078c-6488-40db-b74e-2f91eb2202b0",
-                "playerName": "Audge"
-            },
-            {
-                "id": "1bf8af28-4ef8-4c0f-b969-66756b052da9",
-                "playerName": "Ezra"
-            }
-        ]
-    },
-    {
         "id": "f5776000-a446-4ead-3453245-2345",
-        "name": "Toan",
+        "name": "Kom J",
         "members": [
             {
                 "id": "1dc6078c-9449-40db-3333-2f91eb2202b0",
@@ -57,7 +43,7 @@ const teamsJSON = [
     },
     {
         "id": "f5776308-a446-4ead-3453245-2345",
-        "name": "Chla",
+        "name": "Chella",
         "members": [
             {
                 "id": "1dc6078c-6488-40db-3333-2f91eb2202b0",
@@ -89,11 +75,11 @@ const teamsJSON = [
         "members": [
             {
                 "id": "1dc6078c-6488-40db-3333-2f91eb2202b0",
-                "playerName": "Wham Sam"
+                "playerName": "Ziggy"
             },
             {
                 "id": "1bf8af28-4ef8-4c0f-4421-66756b052da9",
-                "playerName": "Cooper"
+                "playerName": "Lucy"
             }
         ]
     },
@@ -109,6 +95,20 @@ const teamsJSON = [
                 "id": "1bf8af28-4ef8-4c0f-4421-66756b052da9",
                 "playerName": "Cooper"
             }
+        ]
+    },
+    {
+        "id": "f5776308-2222-4ead-818196-2345",
+        "name": "Beve",
+        "members": [
+            {
+                id: "1dc6078c-6488-40db-3333-2f91eb2202b0",
+                playerName: "Belle",
+              },
+              {
+                id: "1bf8af28-4ef8-4c0f-4421-2f91eb2202b0",
+                playerName: "Eve",
+              },
         ]
     }
 ]

@@ -26,6 +26,7 @@ const PlayerList = () => {
   return (
     <div>
       <h1 className="text-1xl font-bold underline">Player List</h1>
+      <h1 className="text-1xl font-bold">{players.length}</h1>
       <ul className="border-2 border-white rounded">
         {players.map((player, index) => (
           <div key={index} className="flex justify-between items-center">

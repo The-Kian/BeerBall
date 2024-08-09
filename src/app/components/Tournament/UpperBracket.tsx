@@ -38,6 +38,10 @@ const UpperBracket = ({ upperRounds, setUpperRounds, lowerRounds, setLowerRounds
                                 onClick={() => handleTeamWin(seed.teams[1], roundIndex, seedIndex, isLowerBracket, upperRounds, setUpperRounds, finalRounds, setFinalRounds)}>
                                 Win
                             </button>
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                                onClick={() => handleTeamLoss(seed.teams[1], roundIndex, seedIndex, lowerRounds, setLowerRounds)}>
+                                Lose
+                            </button>
                         </div>
                     </div>
                 </SeedItem>
