@@ -25,7 +25,7 @@ export const handleTeamLoss = (
         console.log('🚀 handleTeamLoss ~ Seed found  for lowerMatchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
         
     } else {
-        // Handle the case where the seed does not exist, if necessary
+        // Handle the case where the seed does not exist
         console.log('🚀 handleTeamLoss ~  Seed not found for lowerMatchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
     }
 
@@ -45,18 +45,16 @@ const calculateLowerMatchId = ({upperRoundId, upperMatchId, totalLowerMatches}:a
     switch (upperRoundId) {
         case 0:
             console.log("🚀 ~ calculateLowerMatchId ~ case 0:")
-            baseID = 7
+            baseID = 15//n-1
             break;
         case 1:
             console.log("🚀 ~ calculateLowerMatchId ~ case 1:")
-            baseID = 9
+            baseID = 9 // n-1 + n/4
             break;
         case 2:
             console.log(`🚀 ~ calculateLowerMatchId ~ case: ${upperRoundId}`)
             baseID = 12
             break;
     }
-    
-
     return baseID + (upperMatchId % 2);
 };

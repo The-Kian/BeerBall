@@ -1,11 +1,15 @@
+import Gallery from '@/app/components/Gallery';
 import React from 'react';
 
 const RulesPage: React.FC = () => {
 
     return (
         <div>
+        <div>
         <h1 className="text-4xl mb-4 space-y-8 space-x-8">Rules</h1>
         <h2 className="text-2xl">BeerBall Rules 2024</h2>
+        </div>
+        <Gallery/>
 
         <h3 className="text-xl font-bold">Setup and First Throw:</h3>
         <p>Two teams play against each other. Each team has a can placed on their side of a table.</p>
