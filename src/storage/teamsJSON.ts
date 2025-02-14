@@ -110,6 +110,7 @@ const teamsJSON = [
                 playerName: "Eve",
               },
         ]
-    }
+    },
+    
 ]
   export default teamsJSON;
