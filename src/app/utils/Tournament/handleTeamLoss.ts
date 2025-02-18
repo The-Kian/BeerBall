@@ -1,7 +1,6 @@
 import { IRoundProps } from "react-brackets";
 import { RBSeedTeam } from "@/app/types";
-import { IExtendedSeedProps } from "@/app/types/extendedSeedProps";
-
+import { IExtendedSeedProps } from "@/app/types/ExtendedSeedProps";
 
 export const handleTeamLoss = (
   losingTeam: RBSeedTeam,
@@ -10,17 +9,34 @@ export const handleTeamLoss = (
   setLowerRounds: (rounds: IRoundProps[]) => void
 ) => {
   if (!seed.loserGoesTo) {
-    console.log("No loser mapping available (this match might not send losers anywhere).");
+    console.log(
+      "No loser mapping available (this match might not send losers anywhere)."
+    );
     return;
   }
-  const { roundId, matchId, slotIndex } = seed.loserGoesTo;
-  const updatedLower = [...lowerRounds];
-  if (!updatedLower[roundId] || !updatedLower[roundId].seeds[matchId]) {
+  const {
+    roundId: targetRoundId,
+    matchId: targetMatchId,
+    slotIndex: targetTeamSlot,
+  } = seed.loserGoesTo;
+
+  // Create a shallow copy of the lower rounds array.
+  const updatedLowerRounds = [...lowerRounds];
+  
+  if (
+    !updatedLowerRounds[targetRoundId] ||
+    !updatedLowerRounds[targetRoundId].seeds[targetMatchId]
+  ) {
     console.error("Invalid mapping for lower bracket:", seed);
     return;
   }
-  const targetSeed = { ...updatedLower[roundId].seeds[matchId] } as IExtendedSeedProps;
-  targetSeed.teams[slotIndex] = losingTeam;
-  updatedLower[roundId].seeds[matchId] = targetSeed;
-  setLowerRounds(updatedLower);
+  const targetSeed = {
+    ...updatedLowerRounds[targetRoundId].seeds[targetRoundId],
+  } as IExtendedSeedProps;
+
+  targetSeed.teams[targetTeamSlot] = losingTeam;
+
+  updatedLowerRounds[targetRoundId].seeds[targetMatchId] = targetSeed;
+  
+  setLowerRounds(updatedLowerRounds);
 };
