@@ -32,19 +32,27 @@ export const getUpperWinnerFlow = (
   matchIndex: number
 ): IFlowPosition => {
   if (round < numberOfRounds - 1) {
-    return {
+    const targetFlow: IFlowPosition = {
       roundId: round + 1,
       matchId: Math.floor(matchIndex / 2),
       slotIndex: (matchIndex % 2) as 0 | 1,
       bracket: "upper",
     };
+    console.log(
+      `WIN: From upper bracket round:${round}, match:${matchIndex} -> moving to upper bracket round:${targetFlow.roundId}, match:${targetFlow.matchId}, seed:${targetFlow.slotIndex}`
+    );
+    return targetFlow;
   }
-  return {
+  const finalsFlow: IFlowPosition = {
     roundId: 0,
     matchId: 0,
     slotIndex: 0,
     bracket: "final",
   };
+    console.log(
+    `WIN: From upper bracket round:${round}, match:${matchIndex} -> moving to finals at round:${finalsFlow.roundId}, match:${finalsFlow.matchId}, seed:${finalsFlow.slotIndex}`
+  );
+  return finalsFlow;
 };
 
 /**
@@ -59,19 +67,27 @@ export const getUpperLoserFlow = (
   matchIndex: number
 ): IFlowPosition => {
   if (round === 0) {
-    return {
+    const targetFlow: IFlowPosition = {
       roundId: 0,
       matchId: matchIndex % 2 === 0 ? Math.floor(matchIndex / 2) : Math.floor((matchIndex - 1) / 2),
       slotIndex: matchIndex % 2 === 0 ? 0 : 1,
       bracket: "lower",
     };
+    console.log(
+      `LOSE: From upper bracket round:${round}, match:${matchIndex} -> moving to lower bracket round:${targetFlow.roundId}, match:${targetFlow.matchId}, seed:${targetFlow.slotIndex}`
+    );
+    return targetFlow;
   }
-  return {
+  const targetFlow: IFlowPosition = {
     roundId: 2 * round - 1,
     matchId: matchIndex,
     slotIndex: 1,
     bracket: "lower",
   };
+  console.log(
+    `LOSE: From upper bracket round:${round}, match:${matchIndex} -> moving to lower bracket round:${targetFlow.roundId}, match:${targetFlow.matchId}, seed:${targetFlow.slotIndex}`
+  );
+  return targetFlow;
 };
 
 /**

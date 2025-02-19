@@ -31,8 +31,17 @@ export const handleTeamLoss = (
     return;
   }
   const targetSeed = {
-    ...updatedLowerRounds[targetRoundId].seeds[targetRoundId],
+    ...updatedLowerRounds[targetRoundId].seeds[targetMatchId],
   } as IExtendedSeedProps;
+
+    // Check if a team is already in the target slot.
+    if (targetSeed.teams[targetTeamSlot]?.name) {
+      console.warn(
+        `Lower bracket slot already occupied at round:${targetRoundId}, match:${targetMatchId}, slot:${targetTeamSlot}.`
+      );
+      return;
+    }
+  
 
   targetSeed.teams[targetTeamSlot] = losingTeam;
 
