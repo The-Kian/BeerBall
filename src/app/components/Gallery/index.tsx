@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 
 const images = [
     "/BeerballExplained1.png",
@@ -21,7 +22,7 @@ const Gallery = () => {
     }
     return (
         <div>
-            <img onClick={nextImage} src={images[currentImage]} />
+            <Image onClick={nextImage} src={images[currentImage]} alt={`Beerball explainer, ${currentImage}`}/>
             <button onClick={prevImage}>Prev</button>
             <button onClick={nextImage}>Next</button>
         </div>

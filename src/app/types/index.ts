@@ -10,7 +10,6 @@ export type Team = {
 };
 
 export interface RBSeedTeam {
-    
         name?: string;
         [key: string]: any;
 }

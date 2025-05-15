@@ -36,9 +36,7 @@ export const TournamentProvider = ({ children }: TournamentProviderProps) => {
   const [finalRounds, setFinalRounds] = useState<IRoundProps[]>([]);
 
   const { teams } = useContext(PlayerTeamContext);
-
-  
-
+  console.log(`🚀 - KP -  ~ TournamentProvider ~ teams:`, teams.length)
     useEffect(() => {
         if (teams) {
         const newRounds = createInitialMatches(teams);

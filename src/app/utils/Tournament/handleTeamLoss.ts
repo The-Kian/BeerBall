@@ -1,60 +1,51 @@
-import { RBSeedTeam } from "@/app/types";
 import { IRoundProps } from "react-brackets";
+import { RBSeedTeam } from "@/app/types";
+import { IExtendedSeedProps } from "@/app/types/ExtendedSeedProps";
 
 export const handleTeamLoss = (
-    losingTeam: RBSeedTeam,
-    upperRoundId: number,
-    upperMatchId: number,
-    lowerRounds: IRoundProps[], 
-    setLowerRounds: (value: IRoundProps[]) => void
+  losingTeam: RBSeedTeam,
+  seed: IExtendedSeedProps,
+  lowerRounds: IRoundProps[],
+  setLowerRounds: (rounds: IRoundProps[]) => void
 ) => {
-    const updatedLowerRounds = [...lowerRounds];
+  if (!seed.loserGoesTo) {
+    console.log(
+      "No loser mapping available (this match might not send losers anywhere)."
+    );
+    return;
+  }
+  const {
+    roundId: targetRoundId,
+    matchId: targetMatchId,
+    slotIndex: targetTeamSlot,
+  } = seed.loserGoesTo;
 
-    const lowerRoundId = calculateLowerRoundId(upperRoundId);
-    const lowerMatchId = calculateLowerMatchId({upperRoundId, upperMatchId});
+  // Create a shallow copy of the lower rounds array.
+  const updatedLowerRounds = [...lowerRounds];
+  
+  if (
+    !updatedLowerRounds[targetRoundId] ||
+    !updatedLowerRounds[targetRoundId].seeds[targetMatchId]
+  ) {
+    console.error("Invalid mapping for lower bracket:", seed);
+    return;
+  }
+  const targetSeed = {
+    ...updatedLowerRounds[targetRoundId].seeds[targetMatchId],
+  } as IExtendedSeedProps;
 
-    const lowerRound = updatedLowerRounds[lowerRoundId];
-    let targetSeedIndex = lowerRound.seeds.findIndex(seed => seed.id === lowerMatchId);
-
-    if (targetSeedIndex !== -1) {
-        // Seed exists, update the team in the next available slot
-        const slotIndex = lowerRound.seeds[targetSeedIndex].teams[0].name ? 1 : 0;
-        console.log("🚀 handleTeamLoss ~ slotIndex:", slotIndex)
-        
-        lowerRound.seeds[targetSeedIndex].teams[slotIndex] = losingTeam;
-        console.log('🚀 handleTeamLoss ~ Seed found  for lowerMatchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
-        
-    } else {
-        // Handle the case where the seed does not exist
-        console.log('🚀 handleTeamLoss ~  Seed not found for lowerMatchId:', lowerMatchId, 'from upperMatchID', upperMatchId, 'in round: ', upperRoundId);
+    // Check if a team is already in the target slot.
+    if (targetSeed.teams[targetTeamSlot]?.name) {
+      console.warn(
+        `Lower bracket slot already occupied at round:${targetRoundId}, match:${targetMatchId}, slot:${targetTeamSlot}.`
+      );
+      return;
     }
+  
 
-    setLowerRounds(updatedLowerRounds);
-};
+  targetSeed.teams[targetTeamSlot] = losingTeam;
 
-const calculateLowerRoundId = (upperRoundId: number) => {
-    if (upperRoundId === 2) {
-        return 3;
-    }
-    return upperRoundId;
-}
-
-const calculateLowerMatchId = ({upperRoundId, upperMatchId, totalLowerMatches}:any) => {
-
-    let baseID = upperMatchId;
-    switch (upperRoundId) {
-        case 0:
-            console.log("🚀 ~ calculateLowerMatchId ~ case 0:")
-            baseID = 15//n-1
-            break;
-        case 1:
-            console.log("🚀 ~ calculateLowerMatchId ~ case 1:")
-            baseID = 9 // n-1 + n/4
-            break;
-        case 2:
-            console.log(`🚀 ~ calculateLowerMatchId ~ case: ${upperRoundId}`)
-            baseID = 12
-            break;
-    }
-    return baseID + (upperMatchId % 2);
+  updatedLowerRounds[targetRoundId].seeds[targetMatchId] = targetSeed;
+  
+  setLowerRounds(updatedLowerRounds);
 };
