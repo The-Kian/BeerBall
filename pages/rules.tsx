@@ -26,6 +26,7 @@ const RulesPage: React.FC = () => {
         <h3 className="text-xl font-bold">Catching the Ball:</h3>
         <p>If an opponent catches the ball after you&apos;ve hit their can, you cannot drink. Instead, the catcher has the opportunity to drink.</p>
         <p>The catcher can also run until tagged by someone from the opposing team. If tagged, the drinking stops.</p>
+        <p>A catch counts if it pings of the tinny and is caught before it hits the floor or table. If the ball hits a teammate before it is caught, it still counts as a catch </p>
         <p>Don&apos;t run outside the park.</p>
 
         <h3 className="text-xl font-bold">Interference:</h3>
@@ -49,7 +50,7 @@ const RulesPage: React.FC = () => {
 
 
     <h3 className="text-xl font-bold">Player Equipment:</h3>
-    <p>Each player must use a standard-sized can of at least 440ml.</p>
+    <p>Each player must use a regulation sized tinny can of at least 440ml.</p>
 
 
     <h3 className="text-xl font-bold">Fouls and Penalties:</h3>
