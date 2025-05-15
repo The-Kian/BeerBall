@@ -50,7 +50,7 @@ const RulesPage: React.FC = () => {
 
 
     <h3 className="text-xl font-bold">Player Equipment:</h3>
-    <p>Each player must use a regulation sized tinny can of at least 440ml.</p>
+    <p>Each player must use a regulation sized tinny of at least 440ml.</p>
 
 
     <h3 className="text-xl font-bold">Fouls and Penalties:</h3>
