@@ -1,76 +1,47 @@
 import { Team } from "@/app/types";
-import { IRoundProps, ISeedProps } from "react-brackets";
+import { IRoundProps } from "react-brackets";
+import { createUpperBracket, UpperBracketResult } from "./createUpperBracket";
+import { createLowerBracket } from "./createLowerBracket";
+import { createFinals } from "./createFinals";
 
-interface ITournamentData {
-    upperRounds: IRoundProps[];
-    lowerRounds: IRoundProps[];
-    finalRounds: IRoundProps[];
+export interface ITournamentData {
+  upperRounds: IRoundProps[];
+  lowerRounds: IRoundProps[];
+  finalRounds: IRoundProps[];
 }
 
+/**
+ * Creates the initial tournament matches for the given teams.
+ *
+ * @param teams - Array of teams (must be a power of 2).
+ * @returns An object containing the upper, lower, and finals rounds.
+ */
 const createInitialMatches = (teams: Team[]): ITournamentData => {
-    const numTeams = teams.length;
-    let matchId = 0;
-    const upperBracketRounds: IRoundProps[] = [];
-    const lowerBracketRounds: IRoundProps[] = [];
+  const numTeams = teams.length;
 
-    const numberOfRounds = Math.log2(numTeams);
+  // Validate team count.
+  if ((numTeams & (numTeams - 1)) !== 0) {
+    throw new Error("Team count must be a power of 2 (and no byes).");
+  }
 
-    for (let round = 0; round < numberOfRounds; round++) {
-        const numberOfMatches = numTeams / Math.pow(2, round + 1);
-        const upperRoundMatches = [];
+  // Shared mutable match ID counter.
+  const matchId = { value: 0 };
 
-        for (let i = 0; i < numberOfMatches; i++) {
-            upperRoundMatches.push({
-                id: matchId++,
-                teams: round === 0 ? [teams[2 * i], teams[2 * i + 1]] : [{}, {}],
-            });
-        }
-        upperBracketRounds.push({
-            title: `Upper Bracket Round ${round + 1}`,
-            seeds: upperRoundMatches,
-            id: round,
-            teams: [],
-        });
-    }
-    const numberOfLowerRounds = numberOfRounds;
+  // Create upper bracket.
+  const { rounds: upperRounds, numberOfRounds }: UpperBracketResult = createUpperBracket(teams, matchId);
 
-    for (let round = 0; round <= numberOfLowerRounds; round++) {
-        let numberOfMatches;
-        if (round === 1) { 
-            numberOfMatches = (numTeams / Math.pow(2, round + 2)) + 1; 
-        } else {
-            numberOfMatches = numTeams / Math.pow(2, round + 2); 
-        }
-        console.log("🚀 ~ createInitialLowerMatches ~ numberOfMatches:", numberOfMatches, "round: ", round)
+  // Create lower bracket.
+  const lowerRounds = createLowerBracket(numTeams, numberOfRounds, matchId);
+  const numLBRounds = 2 * numberOfRounds - 2;
 
-        const lowerRoundMatches = [];
-    
-        for (let i = 0; i < numberOfMatches; i++) {
-            lowerRoundMatches.push({
-                id: matchId++,
-                teams: [{}, {}],
-            });
-        }
-        lowerBracketRounds.push({
-            title: `Lower Bracket Round ${round + 1}`,
-            seeds: lowerRoundMatches,
-            id: round,
-            teams: [],
-        });
-    }
-    
-    return {
-        upperRounds: upperBracketRounds,
-        lowerRounds: lowerBracketRounds,
-        finalRounds: [
-            {
-                title: 'Finals',
-                seeds: [{ id: 0, teams: [{}, {}] }],
-                id: 0,
-                teams: [],
-            },
-        ],
-    };
+  // Create finals and map final flows.
+  const finalRounds = createFinals(upperRounds, lowerRounds, numberOfRounds, numLBRounds);
+
+  return {
+    upperRounds,
+    lowerRounds,
+    finalRounds,
+  };
 };
 
 export default createInitialMatches;

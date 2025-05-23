@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps, initialPlayers, initialTeams }: AppProps 
       window.localStorage.setItem("players", JSON.stringify(initialPlayers));
       window.localStorage.setItem("teams", JSON.stringify(initialTeams));
     }
-  }, []);
+  }, [initialPlayers, initialTeams]);
 
   return (
     <Layout>

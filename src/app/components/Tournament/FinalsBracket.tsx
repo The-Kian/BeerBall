@@ -1,36 +1,23 @@
-import { handleTeamWin } from "@/app/utils/Tournament/handleTeamWin";
-import { IRenderSeedProps, Seed, SeedItem, SeedTeam, Bracket, IRoundProps } from "react-brackets";
+import { IRenderSeedProps, Bracket, IRoundProps } from "react-brackets";
+import { IExtendedSeedProps } from "@/app/types/ExtendedSeedProps";
+import Match from "./Match";
+
 interface FinalsBracketProps {
-    rounds: IRoundProps[];
-    setRounds: (rounds: IRoundProps[]) => void;
+  rounds: IRoundProps[];
+  setRounds: (rounds: IRoundProps[]) => void;
 }
 
-const FinalsBracket = ({ rounds, setRounds }: FinalsBracketProps) => {
-    const CustomSeed = ({ seed, breakpoint, roundIndex, seedIndex }: IRenderSeedProps) => {
-        const isLowerBracket = false;
-        return (
-            <Seed mobileBreakpoint={breakpoint} className="text-sm">
-                <SeedItem>
-                    <div>
-                        <div className="flex justify-between items-center my-1">
-                            {seed.id}
-                            <SeedTeam className="flex-grow">{seed.teams[0]?.name || 'NO TEAM'}</SeedTeam>
-                        </div>
-                        <div className="flex justify-between items-center my-1">
-                        {seed.id}
+const FinalsBracket = ({ rounds }: FinalsBracketProps) => {
+  const CustomSeed = ({ seed, breakpoint }: IRenderSeedProps) => {
+    const extendedSeed = seed as IExtendedSeedProps;
+    return <Match extendedSeed={extendedSeed} showActions={false} onWin={()=>console.log('win')}/>;
+  };
 
-                            <SeedTeam className="flex-grow">{seed.teams[1]?.name || 'NO TEAM'}</SeedTeam>
-                        </div>
-                    </div>
-                </SeedItem>
-            </Seed>
-        );
-    }
-
-    return (
-        <div>
-            <Bracket rounds={rounds} renderSeedComponent={CustomSeed}></Bracket>
-        </div>
-    );
+  return (
+    <div>
+      <Bracket rounds={rounds} renderSeedComponent={CustomSeed} />
+    </div>
+  );
 };
+
 export default FinalsBracket;
